@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>timer</title>
+    <style media="screen">
+    .container{
+      background-color: white;
+      min-width: 500px;
+      position: absolute;
+      transform: translate(-50%,-50%);
+      top: 50%;
+      left: 50%;
+      padding: 20px 0;
+      padding-bottom: 50px;
+      border-radius: 10px;
+    }
+    body{
+      background-color: blue;
+    }
+    .td{
+      position:relative;
+      width:92%;
+      background:white;
+      left:4%;
+      padding:40px 0px;
+      padding-left: 15px;
+      font-family:'Robot mono',monospace;
+      color:green;
+      display:flex;
+      align-items:center;
+      border-radius:5px;
+      font-size:40px;
+      box-shadow:0 0 20px rgba(0,139,0,25);
+    }
+    button{
+        width: 120px;
+        height: 45px;
+        background-color: #205e94;
+        color: #ffffff;
+        border: none;
+        font-family: 'Poppins',sans-serif;
+        font-size: 18px;
+        border-radius: 50px;
+        cursor: pointer;
+        outline: none;
+
+    }
+    .btn{
+      width=90%;
+      margin:60px auto 0 auto;
+      display: flex;
+      justify-content: space-around;
+    }
+    #start{
+      background-color: green;
+      box-shadow: 0 0 10px green;
+    }
+    #reset{
+      background-color: orange;
+      box-shadow: 0 0 10px orange;
+    }
+    #stop{
+      background-color: red;
+      box-shadow:0 0 10px red;
+    }
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="td">
+         00 : 00 : 00 : 000
+      </div>
+      <div class="btn">
+        <button id="start">Start</button>
+        <button id="stop" name="button">pause</button>
+        <button id="reset" name="button">reset</button>
+      </div>
+    </div>
+
+  </body>
+  <script type="text/javascript">
+  let [milliseconds,seconds,minutes,hours] = [0,0,0,0];
+  let timerRef = document.querySelector('.td');
+  let int = null;
+
+  document.getElementById('start').addEventListener('click', ()=>{
+      if(int!==null){
+          clearInterval(int);
+      }
+      int = setInterval(td,10);
+  });
+
+  document.getElementById('stop').addEventListener('click', ()=>{
+      clearInterval(int);
+  });
+
+  document.getElementById('reset').addEventListener('click', ()=>{
+      clearInterval(int);
+      [milliseconds,seconds,minutes,hours] = [0,0,0,0];
+      timerRef.innerHTML = '00 : 00 : 00 : 000 ';
+  });
+
+  function td(){
+      milliseconds+=10;
+      if(milliseconds == 1000){
+          milliseconds = 0;
+          seconds++;
+          if(seconds == 60){
+              seconds = 0;
+              minutes++;
+              if(minutes == 60){
+                  minutes = 0;
+                  hours++;
+              }
+          }
+      }
+
+   let h = hours < 10 ? "0" + hours : hours;
+   let m = minutes < 10 ? "0" + minutes : minutes;
+   let s = seconds < 10 ? "0" + seconds : seconds;
+   let ms = milliseconds < 10 ? "00" + milliseconds : milliseconds < 100 ? "0" + milliseconds : milliseconds;
+
+   timerRef.innerHTML = ` ${h} : ${m} : ${s} : ${ms}`;
+  }
+
+</script>
+</html>
